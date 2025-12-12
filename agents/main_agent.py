@@ -1,15 +1,15 @@
-from langchain.messages import AnyMessage
+from langchain.messages import AnyMessage, SystemMessage, ToolMessage
 from typing_extensions import TypedDict, Annotated
 import operator
-from langchain.messages import SystemMessage, ToolMessage
 from typing import Literal
 from langgraph.graph import StateGraph, START, END
 
-from tools.tavily import google_search
+from tools.tavily_web_search import tavily_web_search
 from llm.groq import llm as model
+from agents.system_prompt import system_prompt
 
 
-tools = [google_search]
+tools = [tavily_web_search]
 tools_by_name = {tool.name: tool for tool in tools}
 model_with_tools = model.bind_tools(tools)
 
@@ -25,12 +25,7 @@ def llm_call(state: dict):
     return {
         "messages": [
             model_with_tools.invoke(
-                [
-                    SystemMessage(
-                        content="You are helpful assistant to parse realtime weather data for the given location."
-                    )
-                ]
-                + state["messages"]
+                [SystemMessage(content=system_prompt)] + state["messages"]
             )
         ],
         "llm_calls": state.get("llm_calls", 0) + 0,
