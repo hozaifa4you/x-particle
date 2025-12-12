@@ -1,15 +1,16 @@
-from config.environments import config
+from agent.agent import build_graph
 
 
-def main():
-    print(f"App Name: {config.APP_NAME}")
-    print(f"App Version: {config.APP_VERSION}")
-    print(f"App Environment: {config.APP_ENV}")
-    print(f"Running on Port: {config.PORT}")
-    print(f"Tavily API Key: {config.TAVILY_API_KEY}")
-    print(f"OpenAI API Key: {config.OPENAI_API_KEY}")
-    print(f"OpenAI API Temperature: {config.OPENAI_API_TEMPERATURE}")
+async def main():
+    app = build_graph()
 
+    result = await app.ainvoke(
+        {
+            "messages": [
+                {"role": "user", "content": "What is the weather of Dhaka city today?"}
+            ]
+        }
+    )
 
-if __name__ == "__main__":
-    main()
+    final_message = result["messages"][-1]
+    print(final_message)

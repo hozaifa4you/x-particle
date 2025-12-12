@@ -11,10 +11,11 @@ class Config:
     APP_VERSION = os.getenv("APP_VERSION", "0.0.1")
 
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+    GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
+
     TEMPERATURE = float(os.getenv("TEMPERATURE", 0))
 
     TAVILY_API_KEY = os.getenv("TAVILY_API_KEY", "")
-    GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 
 
 config = Config()
