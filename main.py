@@ -1,16 +1,16 @@
-from agent.agent import build_graph
+from langchain.messages import HumanMessage
+from agents.main_agent import agent
 
 
 async def main():
-    app = build_graph()
+    print("Building agent graph...")
+    messages = [HumanMessage(content="What is the weather in New York?")]
+    messages = agent.invoke({"messages": messages})
 
-    result = await app.ainvoke(
-        {
-            "messages": [
-                {"role": "user", "content": "What is the weather of Dhaka city today?"}
-            ]
-        }
-    )
+    print(messages["messages"][-1].content)
 
-    final_message = result["messages"][-1]
-    print(final_message)
+
+if __name__ == "__main__":
+    import asyncio
+
+    asyncio.run(main())
