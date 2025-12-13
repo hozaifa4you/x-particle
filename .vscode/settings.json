@@ -3,5 +3,6 @@
   "editor.formatOnSave": true,
   "files.autoSave": "onFocusChange",
   "editor.defaultFormatter": "ms-python.black-formatter",
-  "editor.tabSize": 4
+  "editor.tabSize": 4,
+  "python.analysis.typeCheckingMode": "standard"
 }

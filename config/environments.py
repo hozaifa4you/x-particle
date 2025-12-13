@@ -17,5 +17,9 @@ class Config:
 
     TAVILY_API_KEY = os.getenv("TAVILY_API_KEY", "")
 
+    LOGIN = os.getenv("LOGIN")
+    PASSWD = os.getenv("PASSWD")
+    SERVER = os.getenv("SERVER")
+
 
 config = Config()

@@ -30,6 +30,7 @@ langgraph-prebuilt==1.0.5
 langgraph-sdk==0.2.15
 langsmith==0.4.59
 matplotlib-inline==0.2.1
+metatrader5==5.0.5430
 multidict==6.7.0
 numpy==2.3.5
 orjson==3.11.5

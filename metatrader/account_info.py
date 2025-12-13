@@ -1,11 +1,8 @@
-from langchain.tools import tool
-from metatrader.account_info import account_info as get_mt5_account_info
 import MetaTrader5 as mt5
 from typing import Optional
 
 
-@tool
-def get_account_info() -> Optional[mt5.AccountInfo]:
+def account_info() -> Optional[mt5.AccountInfo]:
     """
     Connect to MetaTrader 5 and retrieve current trading account information.
 
@@ -32,5 +29,17 @@ def get_account_info() -> Optional[mt5.AccountInfo]:
     Note: This function automatically handles initialization and prints errors for debugging.
     Always check if the result is not None before using the data.
     """
-    account_info = get_mt5_account_info()
+
+    if not mt5.initialize():
+        print("Failed to initialize MT5")
+        print("Error code: ", mt5.last_error())
+        return None
+
+    account_info = mt5.account_info()
+    if account_info is None:
+        print("Failed to get account information")
+        print("Error code:", mt5.last_error())
+        mt5.shutdown()
+        return None
+
     return account_info
