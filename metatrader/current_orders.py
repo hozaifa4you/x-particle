@@ -1,6 +1,7 @@
-from .common import ensure_mt5_connection
 import MetaTrader5 as mt5
 import pandas as pd
+
+from .common import ensure_mt5_connection
 
 
 def pending_orders():
