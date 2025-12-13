@@ -1,11 +1,12 @@
 from langchain.messages import HumanMessage
 from agents.main_agent import agent
 from metatrader.account_info import account_info
+from metatrader.current_orders import current_orders
 
 
 async def main():
-    info = account_info()
-    print(info)
+    orders = current_orders()
+    print(orders)
 
 
 if __name__ == "__main__":
