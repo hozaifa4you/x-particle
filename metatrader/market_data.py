@@ -1,17 +1,9 @@
 import MetaTrader5 as mt5
 import pandas as pd
 from datetime import datetime
-
-# from .common import ensure_mt5_connection
-
-
-def ensure_mt5_connection():
-    if not mt5.initialize():
-        return False, f"Failed to initialize MT5. Error: {mt5.last_error()}"
-    return True, None
+from .common import ensure_mt5_connection
 
 
-# --- Core Function for Market Data ---
 def get_market_data(symbol: str, timeframe, count: int):
     """
     Retrieves the most recent 'count' bars of market data for a given symbol and timeframe.
@@ -32,7 +24,6 @@ def get_market_data(symbol: str, timeframe, count: int):
     # 1. Retrieve the rates from the end of history (position 0, count X)
     rates = mt5.copy_rates_from_pos(symbol, timeframe, 0, count)
     mt5.shutdown()
-    print(rates)
 
     if rates is None or len(rates) == 0:
         return f"Failed to retrieve data for {symbol} on timeframe {timeframe}. MT5 Error: {mt5.last_error()}"
@@ -61,7 +52,7 @@ def get_market_data(symbol: str, timeframe, count: int):
 
 # --- EXAMPLE USAGE ---
 
-# Call the function to get the last 100 H1 candles for EURUSD
-result = get_market_data(symbol="EURUSD", timeframe=mt5.TIMEFRAME_H1, count=100)
+# # Call the function to get the last 100 H1 candles for EURUSD
+# result = get_market_data(symbol="EURUSD", timeframe=mt5.TIMEFRAME_H1, count=100)
 
-print(result)
+# print(result)

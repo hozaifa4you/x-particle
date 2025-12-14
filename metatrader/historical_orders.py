@@ -6,7 +6,6 @@ from .common import ensure_mt5_connection
 
 
 def get_history_orders(days_back: int = 30):
-    """Retrieves all historical orders (filled, cancelled, expired) from the MT5 account history."""
     connected, error = ensure_mt5_connection()
     if not connected:
         return error
@@ -18,7 +17,7 @@ def get_history_orders(days_back: int = 30):
     history_orders = mt5.history_orders_get(date_from, today)
     mt5.shutdown()
 
-    if history_orders is None:3
+    if history_orders is None:
         return f"Failed to retrieve historical orders. MT5 Error: {mt5.last_error()}"
     elif len(history_orders) == 0:
         return f"No historical orders found in the last {days_back} days."
