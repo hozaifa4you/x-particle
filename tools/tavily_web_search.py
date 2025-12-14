@@ -9,7 +9,10 @@ def tavily_web_search(query: str) -> dict:
 
     Args:
         query (str): The search query string.
+
+    Returns:
+        5 dict of search result.
     """
 
-    result = tavily.search(query=query, max_results=3)
+    result = tavily.search(query=query, max_results=5)
     return result
