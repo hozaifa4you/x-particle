@@ -3,7 +3,7 @@ from metatrader.current_orders import active_positions, pending_orders
 
 
 @tool
-def get_pending_orders():
+def get_pending_orders_tool():
     """
     Retrieves all conditional trade orders (e.g., Buy Limit, Sell Stop)
     that are currently pending execution on the MT5 account.
@@ -18,7 +18,7 @@ def get_pending_orders():
 
 
 @tool
-def get_active_positions():
+def get_active_positions_tool():
     """
     Retrieves all open trades (positions) that are currently running in the market
     and incurring a live floating profit/loss on the MT5 account.

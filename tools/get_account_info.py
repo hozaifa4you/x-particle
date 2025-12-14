@@ -5,7 +5,7 @@ from typing import Optional
 
 
 @tool
-def get_account_info() -> Optional[mt5.AccountInfo]:
+def get_account_info_tool() -> Optional[mt5.AccountInfo]:
     """
     Connect to MetaTrader 5 and retrieve current trading account information.
 

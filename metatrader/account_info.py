@@ -1,5 +1,6 @@
 import MetaTrader5 as mt5
 from typing import Optional
+from .common import ensure_mt5_connection
 
 
 def account_info() -> Optional[mt5.AccountInfo]:
@@ -30,16 +31,13 @@ def account_info() -> Optional[mt5.AccountInfo]:
     Always check if the result is not None before using the data.
     """
 
-    if not mt5.initialize():
-        print("Failed to initialize MT5")
-        print("Error code: ", mt5.last_error())
-        return None
+    connected, error = ensure_mt5_connection()
+    if not connected:
+        return error
 
-    account_info = mt5.account_info()
-    if account_info is None:
-        print("Failed to get account information")
+    info = mt5.account_info()
+    if info is None:
         print("Error code:", mt5.last_error())
-        mt5.shutdown()
         return None
 
-    return account_info
+    return info
