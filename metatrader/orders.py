@@ -1,5 +1,6 @@
 import MetaTrader5 as mt5
 import pandas as pd
+from typing import Optional
 
 from .common import ensure_mt5_connection
 
@@ -47,3 +48,25 @@ def active_positions():
     )
 
     return df
+
+
+def total_pending_orders() -> Optional[int | str]:
+    connected, error = ensure_mt5_connection()
+    if not connected:
+        return error
+
+    order_count = mt5.orders_total()
+    mt5.shutdown()
+
+    return order_count
+
+
+def total_active_orders() -> Optional[int | str]:
+    connected, error = ensure_mt5_connection()
+    if not connected:
+        return error
+
+    order_count = mt5.positions_total()
+    mt5.shutdown()
+
+    return order_count

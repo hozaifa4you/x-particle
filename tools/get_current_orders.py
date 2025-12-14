@@ -1,5 +1,5 @@
 from langchain.tools import tool
-from metatrader.current_orders import active_positions, pending_orders
+from metatrader.orders import active_positions, pending_orders
 
 
 @tool
