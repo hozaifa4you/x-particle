@@ -37,3 +37,30 @@ def symbol_info(symbol: str) -> Optional[Dict | str]:
         return "Symbol info not found"
 
     return symbol_info._asdict()
+
+
+def tradeable_symbols():
+    connected, error = ensure_mt5_connection()
+    if not connected:
+        return error
+
+    # Define your symbols
+    my_symbols = [
+        "EURUSD_o",
+        "AUDUSD_o",
+        "GBPUSD_o",
+        "USDCAD_o",
+        "USDCHF_o",
+        "USDJPY_o",
+        "NZDUSD_o",
+    ]
+
+    symbols_info = []
+
+    for symbol in my_symbols:
+        info = mt5.symbol_info(symbol)
+        if info is not None:
+            symbols_info.append(info._asdict())
+
+    mt5.shutdown()
+    return symbols_info

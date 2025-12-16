@@ -6,7 +6,7 @@ from metatrader.orders import (
     deals_details,
     deals_history_list,
 )
-from metatrader.market_data import candle_data, symbol_info
+from metatrader.market_data import candle_data, symbol_info, tradeable_symbols
 from metatrader.common import ensure_mt5_connection
 import MetaTrader5 as mt5
 from datetime import datetime
@@ -20,10 +20,8 @@ async def main():
         print(error)
         quit()
 
-    symbol = "EURUSD_o"
-    ticket = 188379380
-    details = deals_details(ticket=ticket)
-    print(details)
+    permission = tradeable_symbols()
+    print(permission)
 
 
 if __name__ == "__main__":
