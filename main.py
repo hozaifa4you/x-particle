@@ -6,15 +6,12 @@ from metatrader.orders import (
     total_active_orders,
 )
 from metatrader.historical_orders import get_history_deals, get_history_orders
-from metatrader.market_data import candle_data, get_symbol_info
+from metatrader.market_data import candle_data, symbol_info
 from metatrader.common import ensure_mt5_connection
 import MetaTrader5 as mt5
 from datetime import datetime
 import pytz
 import pandas as pd
-
-pd.set_option("display.max_columns", 500)  # number of columns to be displayed
-pd.set_option("display.width", 1500)  # max table width to display
 
 
 async def main():
@@ -23,7 +20,9 @@ async def main():
         print(error)
         quit()
 
-    data = candle_data("EURUSD_o", mt5.TIMEFRAME_H1, 0, 10)
+    symbol = "EURUSD_o"
+
+    data = pending_orders()
     print(data)
 
 

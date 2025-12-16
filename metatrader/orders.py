@@ -10,21 +10,44 @@ def pending_orders():
     if not connected:
         return error
 
-    orders = mt5.orders_get()
-    mt5.shutdown()
+    pd_orders = mt5.orders_get()
 
-    if orders is None or len(orders) == 0:
-        return "No active pending orders found on the account."
+    if pd_orders is None or len(pd_orders) == 0:
+        mt5.shutdown()
+        return "Currently on pending orders"
 
-    df = pd.DataFrame(list(orders), columns=orders[0]._asdict().keys())
-    df["time"] = pd.to_datetime(df["time"], unit="s")
-    df.drop(
-        ["time_update", "time_msc", "time_update_msc", "external_id"],
-        axis=1,
-        inplace=True,
+    # Convert to DataFrame - use _asdict() to preserve field names
+    pd_orders_frame = pd.DataFrame([order._asdict() for order in pd_orders])
+    # print(pd_orders_frame)
+
+    # Now you can access columns by name
+    pd_orders_frame["time_setup"] = pd.to_datetime(
+        pd_orders_frame["time_setup"], unit="s"
+    )
+    pd_orders_frame["time_setup_msc"] = pd.to_datetime(
+        pd_orders_frame["time_setup_msc"], unit="ms"
     )
 
-    return df
+    # Optional: Select and reorder specific columns for better display
+    display_columns = [
+        "ticket",
+        "symbol",
+        "type",
+        "volume_current",
+        "price_open",
+        "sl",
+        "tp",
+        "price_current",
+        "time_setup",
+        "state",
+        "comment",
+    ]
+
+    pd_orders_display = pd_orders_frame[display_columns]
+    data = pd_orders_display.to_string(index=False)
+    mt5.shutdown()
+
+    return data
 
 
 def active_positions():
