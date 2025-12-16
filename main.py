@@ -2,10 +2,10 @@ from metatrader.account_info import account_info
 from metatrader.orders import (
     active_positions,
     pending_orders,
-    total_pending_orders,
-    total_active_orders,
+    deals_history_count,
+    deals_details,
+    deals_history_list,
 )
-from metatrader.historical_orders import get_history_deals, get_history_orders
 from metatrader.market_data import candle_data, symbol_info
 from metatrader.common import ensure_mt5_connection
 import MetaTrader5 as mt5
@@ -21,9 +21,9 @@ async def main():
         quit()
 
     symbol = "EURUSD_o"
-
-    data = pending_orders()
-    print(data)
+    ticket = 188379380
+    details = deals_details(ticket=ticket)
+    print(details)
 
 
 if __name__ == "__main__":

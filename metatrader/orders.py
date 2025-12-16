@@ -1,6 +1,7 @@
 import MetaTrader5 as mt5
 import pandas as pd
 from typing import Optional
+from datetime import datetime, timedelta
 
 from .common import ensure_mt5_connection
 
@@ -110,7 +111,7 @@ def active_positions():
     return data
 
 
-def total_pending_orders() -> Optional[int | str]:
+def pending_orders_count() -> Optional[int | str]:
     connected, error = ensure_mt5_connection()
     if not connected:
         return error
@@ -121,7 +122,7 @@ def total_pending_orders() -> Optional[int | str]:
     return order_count
 
 
-def total_active_orders() -> Optional[int | str]:
+def active_orders_count() -> Optional[int | str]:
     connected, error = ensure_mt5_connection()
     if not connected:
         return error
@@ -130,3 +131,52 @@ def total_active_orders() -> Optional[int | str]:
     mt5.shutdown()
 
     return order_count
+
+
+def deals_history_count(prev_days: int):
+    connected, error = ensure_mt5_connection()
+    if not connected:
+        return error
+
+    from_date = datetime.now() - timedelta(days=prev_days)
+    to_date = datetime.now()
+
+    count = mt5.history_deals_total(from_date, to_date)
+    mt5.shutdown()
+
+    return count
+
+
+def deals_history_list(prev_days: int):
+    connected, error = ensure_mt5_connection()
+    if not connected:
+        return error
+
+    from_date = datetime.now() - timedelta(days=prev_days)
+    to_date = datetime.now()
+
+    deals_list = mt5.history_deals_get(from_date, to_date, group="*USD*")
+    deals_list_frame = pd.DataFrame(
+        list(deals_list), columns=deals_list[0]._asdict().keys()
+    )
+    deals_list_frame["time"] = pd.to_datetime(deals_list_frame["time"], unit="s")
+
+    mt5.shutdown()
+    return deals_list_frame.to_string(index=False)
+
+
+def deals_details(ticket: str | int):
+    connected, error = ensure_mt5_connection()
+    if not connected:
+        return error
+
+    details = mt5.history_deals_get(ticket=int(ticket))
+
+    if details is None or len(details) == 0:
+        mt5.shutdown()
+        return "No deals found for this ticket"
+
+    deals_list = [deal._asdict() for deal in details]
+
+    mt5.shutdown()
+    return deals_list
