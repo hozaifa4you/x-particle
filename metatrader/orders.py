@@ -4,6 +4,8 @@ from typing import Optional
 
 from .common import ensure_mt5_connection
 
+# print("\nAvailable columns:", pd_orders_frame.columns.tolist())
+
 
 def pending_orders():
     connected, error = ensure_mt5_connection()
@@ -16,11 +18,7 @@ def pending_orders():
         mt5.shutdown()
         return "Currently on pending orders"
 
-    # Convert to DataFrame - use _asdict() to preserve field names
     pd_orders_frame = pd.DataFrame([order._asdict() for order in pd_orders])
-    # print(pd_orders_frame)
-
-    # Now you can access columns by name
     pd_orders_frame["time_setup"] = pd.to_datetime(
         pd_orders_frame["time_setup"], unit="s"
     )
@@ -28,19 +26,31 @@ def pending_orders():
         pd_orders_frame["time_setup_msc"], unit="ms"
     )
 
-    # Optional: Select and reorder specific columns for better display
     display_columns = [
         "ticket",
         "symbol",
+        "time_setup",
+        "time_setup_msc",
+        "time_done",
+        "time_done_msc",
+        "time_expiration",
         "type",
+        "type_time",
+        "type_filling",
+        "state",
+        "magic",
+        "position_id",
+        "position_by_id",
+        "reason",
+        "volume_initial",
         "volume_current",
         "price_open",
         "sl",
         "tp",
         "price_current",
-        "time_setup",
-        "state",
+        "price_stoplimit",
         "comment",
+        "external_id",
     ]
 
     pd_orders_display = pd_orders_frame[display_columns]
@@ -56,21 +66,48 @@ def active_positions():
         return error
 
     positions = mt5.positions_get()
-    mt5.shutdown()
-
     if positions is None or len(positions) == 0:
-        return "No active open positions (running trades) found on the account."
+        mt5.shutdown()
+        return "Currently no active positions"
 
-    # display these positions as a table using pandas.DataFrame
-    df = pd.DataFrame(list(positions), columns=positions[0]._asdict().keys())
-    df["time"] = pd.to_datetime(df["time"], unit="s")
-    df.drop(
-        ["time_update", "time_msc", "time_update_msc", "external_id"],
-        axis=1,
-        inplace=True,
+    active_positions_frame = pd.DataFrame(
+        [position._asdict() for position in positions]
     )
 
-    return df
+    active_positions_frame["time"] = pd.to_datetime(
+        active_positions_frame["time"], unit="s"
+    )
+    active_positions_frame["time_msc"] = pd.to_datetime(
+        active_positions_frame["time_msc"], unit="ms"
+    )
+
+    display_columns = [
+        "ticket",
+        "symbol",
+        "time",
+        "time_msc",
+        "time_update",
+        "time_update_msc",
+        "type",
+        "magic",
+        "identifier",
+        "reason",
+        "volume",
+        "price_open",
+        "sl",
+        "tp",
+        "price_current",
+        "swap",
+        "profit",
+        "comment",
+        "external_id",
+    ]
+
+    active_positions_display = active_positions_frame[display_columns]
+    data = active_positions_display.to_string(index=False)
+
+    mt5.shutdown()
+    return data
 
 
 def total_pending_orders() -> Optional[int | str]:
