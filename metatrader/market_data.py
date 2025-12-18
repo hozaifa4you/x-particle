@@ -2,6 +2,7 @@ import MetaTrader5 as mt5
 import pandas as pd
 from .common import ensure_mt5_connection
 from typing import Optional, Dict
+from config.environments import config
 
 
 pd.set_option("display.max_columns", 500)
@@ -45,15 +46,7 @@ def tradeable_symbols():
         return error
 
     # Define your symbols
-    my_symbols = [
-        "EURUSDm",
-        "AUDUSDm",
-        "GBPUSDm",
-        "USDCADm",
-        "USDCHFm",
-        "USDJPYm",
-        "NZDUSDm",
-    ]
+    my_symbols = config.SYMBOLS
 
     symbols_info = []
 
