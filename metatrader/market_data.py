@@ -46,13 +46,13 @@ def tradeable_symbols():
 
     # Define your symbols
     my_symbols = [
-        "EURUSD_o",
-        "AUDUSD_o",
-        "GBPUSD_o",
-        "USDCAD_o",
-        "USDCHF_o",
-        "USDJPY_o",
-        "NZDUSD_o",
+        "EURUSDm",
+        "AUDUSDm",
+        "GBPUSDm",
+        "USDCADm",
+        "USDCHFm",
+        "USDJPYm",
+        "NZDUSDm",
     ]
 
     symbols_info = []

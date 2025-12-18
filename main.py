@@ -1,30 +1,26 @@
-from metatrader.account_info import account_info
-from metatrader.orders import (
-    active_positions,
-    pending_orders,
-    deals_history_count,
-    deals_details,
-    deals_history_list,
-)
-from metatrader.market_data import candle_data, symbol_info, tradeable_symbols
-from metatrader.common import ensure_mt5_connection
-import MetaTrader5 as mt5
-from datetime import datetime
-import pytz
-import pandas as pd
+from metatrader.order_execution import send_order, OrderRequest
+from metatrader.market_data import tradeable_symbols
 
 
-async def main():
-    connected, error = ensure_mt5_connection()
-    if not connected:
-        print(error)
-        quit()
+def main():
+    tardeable = tradeable_symbols()
+    # print(tardeable[0])
 
-    permission = tradeable_symbols()
-    print(permission)
+    symbol = "EURUSDm"
+
+    buy_order = OrderRequest(
+        symbol=symbol,
+        volume=0.1,
+        order_type="BUY",
+        sl_points=100,
+        tp_points=200,
+        comment="Python BUY order",
+    )
+
+    result = send_order(buy_order)
+    print("BUY Order Result:")
+    print(result)
 
 
 if __name__ == "__main__":
-    import asyncio
-
-    asyncio.run(main())
+    main()
