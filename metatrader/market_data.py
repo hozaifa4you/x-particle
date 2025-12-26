@@ -32,12 +32,12 @@ def symbol_info(symbol: str) -> Optional[Dict | str]:
     if not connected:
         return error
 
-    symbol_info = mt5.symbol_info(symbol)
+    _symbol_info = mt5.symbol_info(symbol)
     mt5.shutdown()
-    if symbol_info == None:
+    if _symbol_info == None:
         return "Symbol info not found"
 
-    return symbol_info._asdict()
+    return _symbol_info._asdict()
 
 
 def tradeable_symbols():
