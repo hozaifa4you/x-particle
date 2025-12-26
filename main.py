@@ -11,14 +11,14 @@ def main():
     buy_order = OrderRequest(
         symbol=symbol,
         volume=0.1,
-        order_type="BUY",
+        order_type="SELL",
         sl_points=100,
         tp_points=200,
-        comment="Python BUY order",
+        comment="Python SELL order",
     )
 
     result = send_order(buy_order)
-    print("BUY Order Result:")
+    print("SELL Order Result:")
     print(result)
 
 
