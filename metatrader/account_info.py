@@ -10,7 +10,6 @@ def account_info() -> Optional[mt5.AccountInfo]:
 
     info = mt5.account_info()
     if info is None:
-        print("Error code:", mt5.last_error())
         return None
 
     return info

@@ -3,7 +3,7 @@ from config.tavily import tavily
 
 
 @tool
-def tavily_web_search(query: str) -> dict:
+def tavily_web_search_tool(query: str) -> dict:
     """
     Search market data, news, and other relevant information for Forex trading using Tavily.
 

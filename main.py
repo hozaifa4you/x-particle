@@ -1,4 +1,4 @@
-from metatrader.order_execution import send_order, OrderRequest
+from metatrader.metatrader import send_order, OrderRequest
 from metatrader.market_data import tradeable_symbols
 
 

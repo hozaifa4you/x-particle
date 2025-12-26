@@ -3,13 +3,12 @@ from typing_extensions import TypedDict, Annotated
 import operator
 from typing import Literal
 from langgraph.graph import StateGraph, START, END
-
-from tools.tavily_web_search import tavily_web_search
+from tools.tavily_web_search_tool import tavily_web_search_tool
 from llm.groq import llm as model
 from agents.system_prompt import system_prompt
 
 
-tools = [tavily_web_search]
+tools = [tavily_web_search_tool]
 tools_by_name = {tool.name: tool for tool in tools}
 model_with_tools = model.bind_tools(tools)
 
