@@ -13,7 +13,7 @@ from tools.tools import (
     get_account_info_tool,
     get_candle_data_tools,
     symbol_info_tool,
-    tradeable_symbols_tool,
+    tradeable_symbols_tool as get_tradeable_symbols_tool,
     get_active_orders_count_tool,
     get_deals_details_tool,
     get_active_positions_tool,
@@ -32,7 +32,7 @@ tools = [
     get_account_info_tool,
     get_candle_data_tools,
     symbol_info_tool,
-    tradeable_symbols_tool,
+    get_tradeable_symbols_tool,  # Register alias for LLM compatibility
     get_active_orders_count_tool,
     get_deals_details_tool,
     get_active_positions_tool,
@@ -59,18 +59,25 @@ def llm_call(state: dict):
                 [SystemMessage(content=system_prompt)] + state["messages"]
             )
         ],
-        "llm_calls": state.get("llm_calls", 0) + 0,
+        "llm_calls": state.get("llm_calls", 0) + 1,
     }
 
 
 def tool_node(state: dict):
     """Performs the tool call"""
 
+    import json
+
     result = []
     for tool_call in state["messages"][-1].tool_calls:
         tool = tools_by_name[tool_call["name"]]
         observation = tool.invoke(tool_call["args"])
-        result.append(ToolMessage(content=observation, tool_call_id=tool_call["id"]))
+        # Always stringify the observation for LLM compatibility
+        try:
+            content = json.dumps(observation, ensure_ascii=False)
+        except Exception:
+            content = str(observation)
+        result.append(ToolMessage(content=content, tool_call_id=tool_call["id"]))
 
     return {"messages": result}
 

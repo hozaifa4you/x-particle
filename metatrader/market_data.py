@@ -20,8 +20,13 @@ def candle_data(
         symbol, timeframe, initial_bar_index, number_of_bars
     )
 
+    if rates is None or len(rates) == 0:
+        mt5.shutdown()
+        return []
+
     rates_frame = pd.DataFrame(rates)
-    rates_frame["time"] = pd.to_datetime(rates_frame["time"], unit="s")
+    if "time" in rates_frame.columns:
+        rates_frame["time"] = pd.to_datetime(rates_frame["time"], unit="s")
     mt5.shutdown()
 
     return rates_frame.to_dict(orient="records")
