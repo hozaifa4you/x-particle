@@ -11,18 +11,18 @@ def get_candel_data_tools(
     Retrieve historical candle (OHLCV) data for a symbol and timeframe.
 
     Args:
-        symbol (str): Symbol name (e.g., 'EURUSDm'). `tradeable_symbols_tool` can be used to get a list of available symbols.
+        symbol (str): Symbol name (e.g., 'EURUSD'). `tradeable_symbols_tool` can be used to get a list of available symbols.
         timeframe (int):
             MT5 timeframe constant (e.g., mt5.TIMEFRAME_M1-> 1 minute -> 1):
-                1: 1 minute
-                5: 5 minutes
-                15: 15 minutes
-                30: 30 minutes
-                16385: 1 hour
-                16386: 4 hours
-                16401: 1 day
-                16416: 1 week
-                16432: 1 month
+                1: 1 minute (mt5.TIMEFRAME_M1)
+                5: 5 minutes (mt5.TIMEFRAME_M5)
+                15: 15 minutes (mt5.TIMEFRAME_M15)
+                30: 30 minutes (mt5.TIMEFRAME_M30)
+                60: 1 hour (mt5.TIMEFRAME_H1)
+                240: 4 hours (mt5.TIMEFRAME_H4)
+                1440: 1 day (mt5.TIMEFRAME_D1)
+                10080: 1 week (mt5.TIMEFRAME_W1)
+                43200: 1 month (mt5.TIMEFRAME_MN1)
         initial_bar_index (int): Start index (0 = most recent); default is 0
         number_of_bars (int): Number of bars to fetch; default is 100
 
