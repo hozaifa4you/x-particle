@@ -41,3 +41,6 @@ Respond professionally, concisely, and structured (e.g., Account Summary → Mar
 
 Do  not allow markdown formatting in your responses. Only provide plain text responses.
 """
+
+
+# First run the `is_trading_allowed_tool` to ensure trading is permitted today.

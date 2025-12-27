@@ -12,6 +12,7 @@ from tools.tools import (
     send_order_tool,
     get_account_info_tool,
     get_candle_data_tools,
+    get_candle_data_tools as get_candle_data_tool,
     symbol_info_tool,
     tradeable_symbols_tool as get_tradeable_symbols_tool,
     get_active_orders_count_tool,
@@ -34,6 +35,7 @@ tools = [
     send_order_tool,
     get_account_info_tool,
     get_candle_data_tools,
+    get_candle_data_tool,  # Register alias for LLM compatibility
     symbol_info_tool,
     get_tradeable_symbols_tool,  # Register alias for LLM compatibility
     get_active_orders_count_tool,
@@ -92,8 +94,13 @@ def should_continue(state: MessageState) -> Literal["tool_node", END]:
     messages = state["messages"]
     last_message = messages[-1]
 
+    # Debug: print the last message to see if tool_calls is present
+    # print(
+    #     str(last_message).encode("ascii", errors="replace").decode(),
+    # )
+
     # if the llm makes a tool call, then perform an action
-    if last_message.tool_calls:
+    if hasattr(last_message, "tool_calls") and last_message.tool_calls:
         return "tool_node"
 
     # otherwise, we are done

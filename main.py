@@ -12,7 +12,13 @@ def main():
     )
 
     # Instead of print(messages), use safe print for unicode (ascii fallback)
-    print(str(messages).encode("ascii", errors="replace").decode())
+    # Show only the latest message content
+    last_message = messages[-1] if isinstance(messages, list) else messages
+    print(
+        str(getattr(last_message, "content", last_message))
+        .encode("ascii", errors="replace")
+        .decode()
+    )
 
 
 if __name__ == "__main__":

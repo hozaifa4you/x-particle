@@ -67,8 +67,8 @@ def tradeable_symbols_tool() -> Optional[list | str]:
         list of dict: Each dict contains symbol info (symbol, bid, ask, digits, volume_min, etc.)
     Example:
         [
-            {'symbol': 'EURUSD', 'bid': 1.17756, 'ask': 1.17758, ...},
-            {'symbol': 'XAUUSD', 'bid': 2050.12, 'ask': 2050.34, ...},
+            {'symbol': 'EURUSDm', 'bid': 1.17756, 'ask': 1.17758, ...},
+            {'symbol': 'XAUUSDm', 'bid': 2050.12, 'ask': 2050.34, ...},
             ...
         ]
     """
