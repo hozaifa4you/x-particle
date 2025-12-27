@@ -4,7 +4,7 @@ from typing import Optional
 
 
 @tool
-def get_candel_data_tools(
+def get_candle_data_tools(
     symbol: str, timeframe: int, initial_bar_index: int = 0, number_of_bars: int = 100
 ):
     """

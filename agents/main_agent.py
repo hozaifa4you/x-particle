@@ -3,12 +3,44 @@ from typing_extensions import TypedDict, Annotated
 import operator
 from typing import Literal
 from langgraph.graph import StateGraph, START, END
-from tools.tavily_web_search_tool import tavily_web_search_tool
 from llm.groq import llm as model
 from agents.system_prompt import system_prompt
+from tools.tools import (
+    tavily_web_search_tool,
+    close_order_tool,
+    modify_order_tool,
+    send_order_tool,
+    get_account_info_tool,
+    get_candle_data_tools,
+    symbol_info_tool,
+    tradeable_symbols_tool,
+    get_active_orders_count_tool,
+    get_deals_details_tool,
+    get_active_positions_tool,
+    get_deals_history_count_tool,
+    get_pending_orders_count_tool,
+    get_pending_orders_tool,
+    get_deals_history_list_tool,
+)
 
 
-tools = [tavily_web_search_tool]
+tools = [
+    tavily_web_search_tool,
+    close_order_tool,
+    modify_order_tool,
+    send_order_tool,
+    get_account_info_tool,
+    get_candle_data_tools,
+    symbol_info_tool,
+    tradeable_symbols_tool,
+    get_active_orders_count_tool,
+    get_deals_details_tool,
+    get_active_positions_tool,
+    get_deals_history_count_tool,
+    get_pending_orders_count_tool,
+    get_pending_orders_tool,
+    get_deals_history_list_tool,
+]
 tools_by_name = {tool.name: tool for tool in tools}
 model_with_tools = model.bind_tools(tools)
 
