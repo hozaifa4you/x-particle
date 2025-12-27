@@ -3,24 +3,11 @@ from langchain.messages import HumanMessage
 
 
 def main():
-    messages = [HumanMessage(content="Analyze and trade")]
+    messages = [HumanMessage(content="Hello! Analyze and trade accordingly.")]
 
-    llm_call = agent.invoke(
-        {
-            "messages": messages,
-        }
-    )
-
-    # Instead of print(messages), use safe print for unicode (ascii fallback)
-    # Show only the latest message content
-    # last_message = messages[-1]
-    # print(
-    #     str(getattr(last_message, "content", last_message))
-    #     .encode("ascii", errors="replace")
-    #     .decode()
-    # )
-
-    print(llm_call["messages"][0].content)
+    messages = agent.invoke({"messages": messages})
+    for m in messages["messages"]:
+        m.pretty_print()
 
 
 if __name__ == "__main__":
