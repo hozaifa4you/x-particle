@@ -5,7 +5,11 @@ from langchain.messages import HumanMessage
 def main():
     messages = [HumanMessage(content="Analyze and trade")]
 
-    messages = agent.invoke({"messages": messages})
+    messages = agent.invoke(
+        {
+            "messages": messages,
+        }
+    )
 
     # Instead of print(messages), use safe print for unicode (ascii fallback)
     print(str(messages).encode("ascii", errors="replace").decode())

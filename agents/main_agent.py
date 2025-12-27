@@ -21,11 +21,14 @@ from tools.tools import (
     get_pending_orders_count_tool,
     get_pending_orders_tool,
     get_deals_history_list_tool,
+    get_terminal_info_tool,
+    is_trading_allowed_tool,
 )
 
 
 tools = [
     tavily_web_search_tool,
+    is_trading_allowed_tool,
     close_order_tool,
     modify_order_tool,
     send_order_tool,
@@ -40,6 +43,7 @@ tools = [
     get_pending_orders_count_tool,
     get_pending_orders_tool,
     get_deals_history_list_tool,
+    get_terminal_info_tool,
 ]
 tools_by_name = {tool.name: tool for tool in tools}
 model_with_tools = model.bind_tools(tools)

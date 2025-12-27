@@ -1,4 +1,8 @@
-from .account_tools import get_account_info_tool
+from .account_tools import (
+    get_account_info_tool,
+    get_terminal_info_tool,
+    is_trading_allowed_tool,
+)
 from .market_data_tools import (
     get_candle_data_tools,
     symbol_info_tool,
