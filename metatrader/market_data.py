@@ -19,12 +19,12 @@ def candle_data(
     rates = mt5.copy_rates_from_pos(
         symbol, timeframe, initial_bar_index, number_of_bars
     )
-    mt5.shutdown()
 
     rates_frame = pd.DataFrame(rates)
     rates_frame["time"] = pd.to_datetime(rates_frame["time"], unit="s")
+    mt5.shutdown()
 
-    return rates_frame
+    return rates_frame.to_dict(orient="records")
 
 
 def symbol_info(symbol: str) -> Optional[Dict | str]:
@@ -40,7 +40,7 @@ def symbol_info(symbol: str) -> Optional[Dict | str]:
     return _symbol_info._asdict()
 
 
-def tradeable_symbols():
+def tradeable_symbols() -> Optional[list | str]:
     connected, error = ensure_mt5_connection()
     if not connected:
         return error

@@ -9,6 +9,9 @@ def account_info():
 
     info = mt5.account_info()
     if info is None:
-        return None
+        return {
+            "success": False,
+            "error": "Failed to retrieve account information.",
+        }
 
-    return info
+    return info._asdict()
