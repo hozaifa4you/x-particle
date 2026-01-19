@@ -3,7 +3,7 @@ from typing_extensions import TypedDict, Annotated
 import operator
 from typing import Literal
 from langgraph.graph import StateGraph, START, END
-from llm.groq import model
+from llm.openai import model
 from agents.system_prompt import system_prompt
 from tools import (
     close_order_tool,
